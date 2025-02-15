@@ -1,13 +1,300 @@
 <html>
     <title>basic title</title>
+    <head>
+      <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
+      <style>
+        
+      </style>
+      </head>
     <body>
-        <p>This is sample text</p>
-        <table>
-            {% for row in rec %}
+
+
+      <!-- LOGIN FORMS -->
+        {% if not (is_authenticated or is_admin) %}
+        <h1>Captain Login</h1>
+      <form method="post" action="/login">
+        <label for="autha">Password:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+        <button type="submit">Login</button>
+      </form>
+        {% endif%}
+
+      <!-- funny bozo checker alert  -->
+       {% if bozo_checker%}
+       <script>alert("FUCKING NERD!!!!!");</script>
+       <alert>LMAO FUCKING LOSER!!!!!!</alert>
+       {% endif %}
+
+      <!-- LOGOUT -->
+        {% if is_authenticated or is_admin %}
+        <form method="post" action="/logout" style="display:inline;">
+          <button type="submit">LogOut</button>
+        </form>
+        {% endif %}
+
+      <!-- SECRET REF AUTH STUFF -->
+       {% if is_authenticated %}
+      <form method="post" action="/remove" style="display:inline;">
+        <input type="hidden" name="id" value="{{ rec[0] }}">
+        <button type="submit">Remove</button>
+      </form>
+      <p style = 'font-size:100;'> REF FAGGOT</p>
+       {% endif %}
+      <!-- SECRET ADMIN AUTH STUFF -->
+      {% if is_admin %}
+      <p style = 'font-size:200;'> ADMIN FAGGOT</p>
+      {% endif %}
+
+        <!-- THIS IS THE TABLE -->
+        <table border = '1'>
+          <thead>
             <tr>
-              <th> {{ row }}</th>
+              <th>Team</th>
+              <th>Name</th>
+              <th>Number</th>
+              <th>Wins</th>
+              <th>Losses</th>
             </tr> 
-            {% endfor %}
+            <tbody>
+              {% for row in rec %}
+              {% for item in range(1, row|length) %}
+              <td>
+                {{row[item]}}
+              </td>
+              {% endfor %}
+              {% endfor %}
+            </tbody>
+          </thead>
+          
           </table>
+
+
+<!-- Credit to Julia GDE from dev.to for the following html code i was too lazy to code -->
+<h1>Tournament Bracket</h1>
+<table class="bracket">
+  <caption>Test Table</caption>
+  <thead>
+    <tr>
+      <th scope="col">Round 1</th>
+      <th scope="col">Round 2</th>
+      <th scope="col">Round 3</th>
+      <th scope="col">Round 4</th>
+      <th scope="col">Winner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <span>Player 1</span>
+        <span>Player 2</span>
+        <span>Date: 01.01. 1pm</span>
+      </td>
+      <td rowspan="2">
+        <span>Player 1</span>
+        <span>Player 3</span>
+        <span>Date: 05.01. 1pm</span>
+      </td>
+      <td rowspan="4">
+        <span>Player 1</span>
+        <span>Player 5</span>
+        <span>Date: 07.01. 1pm</span>
+      </td>
+      <td rowspan="8">
+        <span>Player 1</span>
+        <span>Player 9</span>
+        <span>Date: 10.01. 1pm</span>
+      </td>
+      <td rowspan="8">
+        <span>Player 1</span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span>Player 3</span>
+        <span>Player 4</span>
+        <span>Date: 01.01. 1.30pm</span>
+      </td>
+    </tr>
+     <tr>
+       <td>
+        <span>Player 5</span>
+        <span>Player 6</span>
+        <span>Date: 01.01. 2pm</span>
+      </td>
+       <td rowspan="2">
+        <span>Player 5</span>
+        <span>Player 7</span>
+        <span>Date: 05.01. 1.30pm</span>
+      </td>
+    </tr>
+    <tr> 
+      <td>
+        <span>Player 7</span>
+        <span>Player 8</span>
+        <span>Date: 01.01. 2.30pm</span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span>Player 9</span>
+        <span>Player 10</span>
+        <span>Date: 01.01. 3pm</span>
+      </td>
+      <td rowspan="2">
+        <span>Player 9</span>
+        <span>Player 11</span>
+        <span>Date: 05.01. 2pm</span>
+      </td>
+      <td rowspan="4">
+        <span>Player 9</span>
+        <span>Player 13</span>
+        <span>Date: 07.01. 1.30pm</span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span>Player 11</span>
+        <span>Player 12</span>
+        <span>Date: 01.01. 3.30pm</span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span>Player 13</span>
+        <span>Player 14</span>
+        <span>Date: 01.01. 4pm</span>
+      </td>
+      <td rowspan="2">
+        <span>Player 13</span>
+        <span>Player 15</span>
+        <span>Date: 05.01. 2.30pm</span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span>Player 15</span>
+        <span>Player 16</span>
+        <span>Date: 01.01. 4.30pm</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="bracket">
+  <caption>Test Table with links</caption>
+  <thead>
+    <tr>
+      <th scope="col">Round 1</th>
+      <th scope="col">Round 2</th>
+      <th scope="col">Round 3</th>
+      <th scope="col">Round 4</th>
+      <th scope="col">Winner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <a href="#">Player 1</a>
+        <a href="#">Player 2</a>
+        <span>Date: 01.01. 1pm</span>
+      </td>
+      <td rowspan="2">
+        <a href="#">Player 1</a>
+        <a href="#">Player 3</a>
+        <span>Date: 05.01. 1pm</span>
+      </td>
+      <td rowspan="4">
+        <a href="#">Player 1</a>
+        <a href="#">Player 5</a>
+        <span>Date: 07.01. 1pm</span>
+      </td>
+      <td rowspan="8">
+        <a href="#">Player 1</a>
+        <a href="#">Player 9</a>
+        <span>Date: 10.01. 1pm</span>
+      </td>
+      <td rowspan="8">
+        <a href="#">Player 1</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="#">Player 3</a>
+        <a href="#">Player 4</a>
+        <span>Date: 01.01. 1.30pm</span>
+      </td>
+    </tr>
+     <tr>
+       <td>
+        <a href="#">Player 5</a>
+        <a href="#">Player 6</a>
+        <span>Date: 01.01. 2pm</span>
+      </td>
+       <td rowspan="2">
+        <a href="#">Player 5</a>
+        <a href="#">Player 7</a>
+        <span>Date: 05.01. 1.30pm</span>
+      </td>
+    </tr>
+    <tr> 
+      <td>
+        <a href="#">Player 7</a>
+        <a href="#">Player 8</a>
+        <span>Date: 01.01. 2.30pm</span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="#">Player 9</a>
+        <a href="#">Player 10</a>
+        <span>Date: 01.01. 3pm</span>
+      </td>
+      <td rowspan="2">
+        <a href="#">Player 9</a>
+        <a href="#">Player 11</a>
+        <span>Date: 05.01. 2pm</span>
+      </td>
+      <td rowspan="4">
+        <a href="#">Player 9</a>
+        <a href="#">Player 13</a>
+        <span>Date: 07.01. 1.30pm</span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="#">Player 11</a>
+        <a href="#">Player 12</a>
+        <span>Date: 01.01. 3.30pm</span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="#">Player 13</a>
+        <a href="#">Player 14</a>
+        <span>Date: 01.01. 4pm</span>
+      </td>
+      <td rowspan="2">
+        <a href="#">Player 13</a>
+        <a href="#">Player 15</a>
+        <span>Date: 05.01. 2.30pm</span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="#">Player 15</a>
+        <a href="#">Player 16</a>
+        <span>Date: 01.01. 4.30pm</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
     </body>
 </html>

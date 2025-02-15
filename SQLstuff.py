@@ -1,8 +1,7 @@
-from flask import Flask, render_template, g
 import os
 import _sqlite3 as sq
 
-app = Flask(__name__)
+
 
 DATABASE = 'database.db'
 cnn = sq.connect(DATABASE)
@@ -22,24 +21,6 @@ def execute_query(query, args=(), fetch=False):
         conn.commit()
         print("Query committed successfully")
 
-
-#FLASK TESTING
-@app.route('/')
-def index():
-    print("Index route called")
-    rec = execute_query("SELECT * FROM playerDatabase", fetch = True)
-    print(f"Fetched records: {rec}")
-    return render_template('index.html', rec = rec)
-    
-
-# @app.route("/")
-# def hello_world():
-#     return "<p>Hello, World!</p>"
-
-
-@app.route("/hello/")
-def hello(name = None):
-    return '<p>hewwo</p>'
 
 
 
