@@ -28,7 +28,7 @@ def index(isBozo = False):
     is_authenticated = session.get('authenticated', False)
     is_admin = session.get('adminAuthenticated', False)
     
-    print(str(bozo_checker))
+    print(str(isBozo))
     #checks if the website should be rendered as a regular user, ref, or admin
     return render_template('index.html', rec = rec, is_authenticated = is_authenticated, is_admin = is_admin, bozo_checker = bozo_checker)
     
@@ -46,6 +46,7 @@ def login():
         return redirect(url_for('index'))
     else:
         bozo_checker = True
+        return render_template('index.html', bozo_checker = bozo_checker)
         return redirect(url_for('index', isBozo = True))
 
 # Route for logout
